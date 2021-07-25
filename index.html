@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+      integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
+      crossorigin="anonymous"
+    />
+    <title>Notes</title>
+  </head>
+  <body>
+    <header>
+      <div class="header">
+        <div class="line"></div>
+        <h1 class="title-app">To do Notes</h1>
+        <div class="line"></div>
+      </div>
+      <h3 id="add-btn" class="add-note">
+        Add <i class="far fa-plus-square"></i>
+      </h3>
+    </header>
+    <main class="grid-cards"></main>
+    <footer>
+      <h3>Made by João Victor G. Rodrigues</h3>
+    </footer>
+
+    <!-- Mansory library -->
+    <script src="mansory.js"></script>
+    <!-- Auto size text area Library -->
+    <script
+      src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"
+    >
+      refeshMasonry();
+    </script>
+    <!-- mine files js -->
+    <script src="main.js"></script>
+  </body>
+</html>
