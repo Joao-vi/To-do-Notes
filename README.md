@@ -12,3 +12,4 @@ Oque foi usado neste projeto ?
 Funcionalidades:
 - Criar uma note com titulo e corpo de texto.
 - Mudar cor desses notes.
+- Patch1 adicionei novas features ( Excluir e tela de confirmação )
