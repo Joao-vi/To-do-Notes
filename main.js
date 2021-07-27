@@ -1,61 +1,17 @@
 // Selectors
-let textAreas = document.querySelectorAll(".text-cards");
+
 const addNoteBtn = document.querySelector("#add-btn ");
 const gridCards = document.querySelector(".grid-cards");
-let colorBtn = document.querySelectorAll(".colorBtn");
-
-// -- Colors
-let darkOrange = document.querySelectorAll(".darkOrange");
-let darkBlue = document.querySelectorAll(".darkBlue");
-let lightBlue = document.querySelectorAll(".lightBlue");
-let mediumGreen = document.querySelectorAll(".mediumGreen");
+const warningWindow = document.querySelector(".warning-window-container");
+let deleteBtn = document.querySelector(".delete");
+const cancelBtn = document.querySelector(".cancel");
 
 // Events
 
-addNoteBtn.addEventListener("click", addNote);
+addNoteBtn.addEventListener("click", addNewNote);
 
-// Functions
-function refeshColorsBtn() {
-  //btns
-  colorBtn = document.querySelectorAll(".colorBtn");
-  colorBtn.forEach((btn) => {
-    btn.addEventListener("click", (event) => {
-      show(event.target);
-    });
-  });
-  //colors
-  darkOrange = document.querySelectorAll(".darkOrange");
-  darkBlue = document.querySelectorAll(".darkBlue");
-  lightBlue = document.querySelectorAll(".lightBlue");
-  mediumGreen = document.querySelectorAll(".mediumGreen");
-
-  darkOrange.forEach((darkOrange) => {
-    darkOrange.addEventListener("click", (event) => {
-      changeColor(event.target);
-    });
-  });
-  darkBlue.forEach((darkBlue) => {
-    darkBlue.addEventListener("click", (event) => {
-      changeColor(event.target);
-    });
-  });
-  lightBlue.forEach((lightBlue) => {
-    lightBlue.addEventListener("click", (event) => {
-      changeColor(event.target);
-    });
-  });
-  mediumGreen.forEach((mediumGreen) => {
-    mediumGreen.addEventListener("click", (event) => {
-      changeColor(event.target);
-    });
-  });
-}
-function show(target) {
-  target.nextElementSibling.classList.toggle("show");
-}
 function changeColor(target) {
-  let color = target.classList[0];
-  console.log(color);
+  let color = target.classList[1];
   switch (color) {
     case "darkOrange": {
       target.closest(".card").style.backgroundColor = "#fe7f2d";
@@ -82,106 +38,72 @@ function changeColor(target) {
     }
   }
 }
-function refreshTextAreas() {
-  textAreas = document.querySelectorAll(".text-cards");
 
-  textAreas.forEach((textArea) => {
-    textArea.addEventListener("keydown", (keyEvent) => {
-      if (keyEvent.key == "Enter") {
-        countEnter();
-      } else {
-        return;
-      }
+function addNewNote() {
+  const card = document.createElement("div");
+  card.classList.add("card");
+  card.innerHTML = `  <div class="title-card">
+                  <textarea class="title-card-box" cols="0" rows="1" maxlength="28" placeholder="Note's Title"></textarea>
+                </div>
+                <div class="text-area-card">
+                  <textarea class="text-cards" placeholder="Type anything..."></textarea>
+                  <div class="wrraper-btn-color">
+                  <i class="fas fa-trash-alt trashBtn"></i>
+                    <i class="fas fa-fill-drip icon-pos colorBtnIcon"></i>
+                    <div class="colors-pos">
+                      <div class="colors">
+                        <li class="colorBtn darkOrange"></li>
+                        <li class="colorBtn  darkBlue"></li>
+                        <li class="colorBtn lightBlue"></li>
+                        <li class="colorBtn mediumGreen"></li>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+
+`;
+  const textArea = card.querySelector(".text-cards");
+  const trashBtn = card.querySelector(".trashBtn");
+  const colorBtnIcon = card.querySelector(".colorBtnIcon");
+  const colorBtns = card.querySelectorAll(".colorBtn");
+
+  colorBtnIcon.addEventListener("click", (event) => {
+    event.target.nextElementSibling.classList.toggle("show");
+  });
+
+  colorBtns.forEach((colorBtn) => {
+    colorBtn.addEventListener("click", (event) => {
+      changeColor(event.target);
     });
+  });
+
+  trashBtn.addEventListener("click", (event) => {
+    warningWindow.classList.add("show-warning-window");
+    verificantion(card);
+    refreshMasonry();
+  });
+
+  autosize(textArea);
+
+  textArea.addEventListener("autosize:resized", refreshMasonry);
+  gridCards.appendChild(card);
+  refreshMasonry();
+}
+
+function refreshMasonry() {
+  const msnry = new Masonry(gridCards, {
+    itemSelector: ".card",
   });
 }
 
-let count = 1;
-function countEnter() {
-  if (count === 2) {
-    refeshMasonry();
-    count = 1;
-  } else {
-    count++;
-  }
-}
-
-function addNote() {
-  //creating tags
-
-  let card = document.createElement("div");
-  card.classList.add("card");
-
-  let titleCard = document.createElement("div");
-  titleCard.classList.add("title-card");
-
-  let textAreaCard = document.createElement("div");
-  textAreaCard.classList.add("text-area-card");
-
-  let textContent = document.createElement("TEXTAREA");
-  textContent.classList.add("text-area-card", "text-cards");
-  textContent.setAttribute("placeholder", "Type here...");
-
-  let textTitle = document.createElement("TEXTAREA");
-  textTitle.classList.add("title-card-box");
-
-  let wrapperBtnColor = document.createElement("div");
-  wrapperBtnColor.classList.add("wrraper-btn-color");
-
-  let icon = document.createElement("i");
-  icon.classList.add("fas", "fa-fill-drip", "icon-pos", "colorBtn");
-  wrapperBtnColor.appendChild(icon);
-
-  let colorsPos = document.createElement("div");
-  colorsPos.classList.add("colors-pos");
-  wrapperBtnColor.appendChild(colorsPos);
-
-  let colors = document.createElement("div");
-  colors.classList.add("colors");
-
-  let darkOrange = document.createElement("li");
-  darkOrange.classList.add("darkOrange");
-
-  let darkBlue = document.createElement("li");
-  darkBlue.classList.add("darkBlue");
-
-  let lightBlue = document.createElement("li");
-  lightBlue.classList.add("lightBlue");
-
-  let mediumGreen = document.createElement("li");
-  mediumGreen.classList.add("mediumGreen");
-
-  colors.appendChild(darkOrange);
-  colors.appendChild(darkBlue);
-  colors.appendChild(lightBlue);
-  colors.appendChild(mediumGreen);
-
-  colorsPos.appendChild(colors);
-
-  textAreaCard.appendChild(wrapperBtnColor);
-
-  textTitle.setAttribute("cols", "0");
-  textTitle.setAttribute("rows", "1");
-  textTitle.setAttribute("placeholder", "Note's title");
-  textTitle.setAttribute("maxlength", "24");
-
-  textTitle.setAttribute("wrap", "off");
-
-  //nesting tags
-  gridCards.appendChild(card);
-  card.appendChild(titleCard);
-  titleCard.appendChild(textTitle);
-  card.appendChild(textAreaCard);
-  textAreaCard.appendChild(textContent);
-  autosize(textContent);
-  refreshTextAreas();
-  refeshMasonry();
-  refeshColorsBtn();
-}
-
-// Masonry Library
-function refeshMasonry() {
-  let msnry = new Masonry(gridCards, {
-    itemSelector: ".card",
+function verificantion(card) {
+  deleteBtn.addEventListener("click", () => {
+    card.remove();
+    warningWindow.classList.remove("show-warning-window");
+    console.log("remove");
+  });
+  cancelBtn.addEventListener("click", () => {
+    warningWindow.classList.remove("show-warning-window");
+    console.log("cancel");
   });
 }
