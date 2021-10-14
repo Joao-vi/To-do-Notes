@@ -13,3 +13,7 @@ Funcionalidades:
 - Criar uma note com titulo e corpo de texto.
 - Mudar cor desses notes.
 - Patch1 adicionei novas features ( Excluir e tela de confirmação )
+
+## Fotos
+
+![11](https://user-images.githubusercontent.com/83383626/137329672-3e673669-ce5d-4657-8818-5683e0f4edf7.png)
